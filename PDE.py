@@ -51,7 +51,7 @@ grid_tf = tf.convert_to_tensor(grid_tf)
 
 model = keras.models.Sequential()
 model.add(layers.InputLayer(input_shape=(2,)))
-for k in range(1):
+for k in range(2):
     model.add(layers.Dense(50, activation='elu'))
 model.add(layers.Dense(1, use_bias = False))
 optimizer = tf.keras.optimizers.Adam()
