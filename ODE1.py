@@ -61,7 +61,7 @@ def diff(t, z):
     return [np.sin(t)/(1 + t + z)]
 sol = solve_ivp(diff,[0, T],[0],dense_output=True)
 z = sol.sol(gx)
-y = model(gx)
+y = model(np.expand_dims(gx, axis=1))
 plt.plot(gx,np.squeeze(y))
 plt.plot(gx, z.T)
 plt.show()
