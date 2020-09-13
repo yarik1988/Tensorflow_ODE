@@ -48,6 +48,8 @@ initial_cond = 0
 
 bar = tqdm()
 keyboard.on_press_key("q", press_key_exit)
+
+
 while True:
     if ready_to_exit:
         break
