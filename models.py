@@ -18,7 +18,7 @@ class Simple:
 
     @staticmethod
     def tf_equation(t, z):
-        return np.sin(z)/(1 + z + t)
+        return tf.math.divide(tf.math.sin(t),(1 + z + t))
 
 
 class TestModel1:
