@@ -66,7 +66,7 @@ def diff(t, z):
     return [z[1],z[0]*z[0]-z[0]-1]
 sol = solve_ivp(diff,[0, T], [0,1],dense_output=True)
 z = sol.sol(gx)
-y = model(gx)
+y = model(tf.expand_dims(q,axis=1))
 plt.plot(gx,np.squeeze(y))
 plt.plot(gx, z[0].T)
 plt.title('Solving equation $y\'\'=y^2-y-1$')

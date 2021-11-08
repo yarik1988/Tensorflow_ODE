@@ -31,7 +31,7 @@ def train_step(model, optimizer, x):
         total_loss = loss+start_loss
         gradients = tape.gradient(total_loss, model.trainable_variables)
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-    return float(tf.math.reduce_mean(loss)),float(tf.math.reduce_mean(start_loss))
+    return float(tf.math.reduce_mean(loss)), float(tf.math.reduce_mean(start_loss))
 
 
 N = 500

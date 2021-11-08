@@ -71,7 +71,7 @@ def diff(t, z):
     return [z[1],6*z[0]*z[0]]
 sol = solve_ivp(diff,[1, T], [1,-2],dense_output=True)
 z = sol.sol(gx)
-y = best_model(gx)
+y = best_model(tf.expand_dims(gx,axis=1))
 plt.plot(gx,np.squeeze(y))
 plt.plot(gx, z[0].T)
 plt.plot(gx, 1.0/gx**2)
