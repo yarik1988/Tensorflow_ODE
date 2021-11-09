@@ -72,9 +72,9 @@ class TestModel3:
     $x_1\'=2x_0-x_1^3$
     """
 
-    T = np.array([0, 20])  # interval
-    pos = np.array([0, 0])  # initial condition positions
-    val = np.array([1, 1])  # initial condition values
+    T = np.array([0, 5])  # interval
+    pos = np.array([0, 5])  # initial condition positions
+    val = np.array([1, 0.25])  # initial condition values
     dim = len(val)
 
     @staticmethod

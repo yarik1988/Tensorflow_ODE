@@ -39,7 +39,7 @@ def train_step(model, optimizer, x):
         ind_list=[]
         val=[]
         for i in range(diff_model.dim):
-            ind=get_pos_ind(0,N)
+            ind=get_pos_ind(i,N)
             ind_list.append([ind, i])
             ysl = y[ind, i]
             val.append((tf.math.square(ysl - diff_model.val[i])) * N)
@@ -54,8 +54,8 @@ def train_step(model, optimizer, x):
 model = keras.models.Sequential()
 model.add(layers.InputLayer(input_shape=(1,)))
 for k in range(5):
-    model.add(layers.Dense(50, activation='elu'))
-model.add(layers.Dense(len(diff_model.pos), use_bias=False))
+    model.add(layers.Dense(50, activation='sigmoid'))
+model.add(layers.Dense(len(diff_model.pos)))
 lr_schedule = keras.optimizers.schedules.ExponentialDecay(0.001, decay_steps=100, decay_rate=0.99)
 optimizer = tf.keras.optimizers.Adam(learning_rate=lr_schedule)
 
@@ -66,9 +66,13 @@ best_model = tf.keras.models.clone_model(model)
 while True:
     if ready_to_exit:
         break
-    grid_tf_run = tf.expand_dims(gx, axis=1)
+    rand_pts = np.random.uniform(low=diff_model.T[0], high=diff_model.T[1], size=(N,))
+    rand_pts = np.sort(rand_pts)
+    for i in range(diff_model.dim):
+        rand_pts[get_pos_ind(i, N)] = diff_model.pos[i]
+    grid_tf_run = tf.expand_dims(rand_pts, axis=1)
     loss = train_step(model, optimizer, grid_tf_run)
-    if (sum(loss) < min_loss):
+    if sum(loss) < min_loss:
         min_loss = sum(loss)
         best_model.set_weights(model.get_weights())
     bar.set_description("Loss: {:.5f} {:.5f} min loss: {:.6f}".format(*loss, min_loss))
