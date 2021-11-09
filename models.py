@@ -4,7 +4,7 @@ import tensorflow as tf
 
 class Simple:
     """
-    $y\'=sin(x)/(1+x+y)$
+    $x\'=sin(t)/(1+t+x)$
     """
 
     T = np.array([0, 10])  # interval
@@ -23,8 +23,8 @@ class Simple:
 
 class TestModel1:
     """
-    $y_0\'=y_1$
-    $y_1\'=6y_0^2$
+    $x_0\'=x_1$
+    $x_1\'=6x_0^2$
     """
 
     T = np.array([1, 2])  # interval
@@ -48,8 +48,8 @@ class TestModel1:
 
 class TestModel2:
     """
-    $y_0\'=y_1$
-    $y_1\'=y_0^2-y-1$
+    $x_0\'=x_1$
+    $x_1\'=x_0^2-x_0-1$
     """
 
     T = np.array([0, 5])  # interval
@@ -64,3 +64,23 @@ class TestModel2:
     @staticmethod
     def tf_equation(t, z):
         return [z[:, 1], tf.math.square(z[:, 0])-z[:, 0]-1]
+
+
+class TestModel3:
+    """
+    $x_0\'=-x_1-x_0^2$
+    $x_1\'=2x_0-x_1^3$
+    """
+
+    T = np.array([0, 20])  # interval
+    pos = np.array([0, 0])  # initial condition positions
+    val = np.array([1, 1])  # initial condition values
+    dim = len(val)
+
+    @staticmethod
+    def equation(t, z):
+        return [-z[1]-z[0]*z[0], 2*z[0]-np.power(z[1], 3)]
+
+    @staticmethod
+    def tf_equation(t, z):
+        return [-z[:, 1]-tf.math.square(z[:, 0]), 2*z[:, 0]-tf.math.pow(z[:, 1], 3)]

@@ -10,7 +10,7 @@ import models
 tf.keras.backend.set_floatx('float64')
 ready_to_exit = False
 N = 500  # number of points to eval
-diff_model = models.Simple
+diff_model = models.TestModel3
 gx = np.linspace(diff_model.T[0], diff_model.T[1], N)
 
 
